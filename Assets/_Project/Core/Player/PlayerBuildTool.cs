@@ -136,7 +136,7 @@ namespace SpaceChaser.Core.Player
                 else if (col.TryGetComponent(out Resource resource))
                 {
                     if (_buildService.RemoveResource(resource))
-                        _inventory.Add(new List<ItemAmount>(resource.Data.Recipe), _config.SalvageRate);
+                        _inventory.Add(new List<ItemAmount>(resource.Data.Resources));
 
                 }
                 else continue;

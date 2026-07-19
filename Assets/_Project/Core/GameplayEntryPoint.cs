@@ -5,6 +5,7 @@ using SpaceChaser.Core.Building;
 using SpaceChaser.Core.Islands;
 using SpaceChaser.Core.Player;
 using SpaceChaser.Core.Registry;
+using UnityEngine;
 using VContainer.Unity;
 
 
@@ -20,6 +21,7 @@ namespace SpaceChaser.Core
         private readonly IAssetRegistry<BuildData> _buildRegistry;
         private readonly IAssetRegistry<StrutData> _strutRegistry;
         private readonly IAssetRegistry<FoundationData> _foundationRegistry;
+        private readonly IIslandService _island;
         public GameplayEntryPoint(
             IPlayerSpawner playerSpawner,
             IBuildFactory buildFactory,
@@ -28,7 +30,8 @@ namespace SpaceChaser.Core
             IIslandFactory islandFactory,
             IAssetRegistry<BuildData> buildRegistry,
             IAssetRegistry<StrutData> strutRegistry,
-            IAssetRegistry<FoundationData> foundationRegistry
+            IAssetRegistry<FoundationData> foundationRegistry,
+            IIslandService island
             )
         {
             _playerSpawner = playerSpawner;
@@ -39,6 +42,7 @@ namespace SpaceChaser.Core
             _buildRegistry = buildRegistry;
             _strutRegistry = strutRegistry;
             _foundationRegistry = foundationRegistry;
+            _island = island;
         }
         public async UniTask StartAsync(CancellationToken token)
         {
@@ -51,9 +55,11 @@ namespace SpaceChaser.Core
 
             await _islandFactory.PrewarmPoolsAsync(token);
 
+            _island.SetupIslands();
+
             _playerSpawner.SpawnPlayer(new(0, 5));
 
-            await UniTask.WaitForEndOfFrame();
+            Debug.Log("Game Loaded");
         }
     }
 }

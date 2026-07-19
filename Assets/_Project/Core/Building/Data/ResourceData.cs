@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace SpaceChaser.Core.Building
 {
-    [CreateAssetMenu(menuName = "Building/Resource")]
-    public class ResourceData : DataAsset
+    [CreateAssetMenu(menuName = "Islands/Resource")]
+    public class ResourceData : ScriptableObject
     {
         public string DisplayName;
-        public List<ItemAmount> Recipe;
+        public List<ItemAmount> Resources;
         public Resource Prefab;
     }
 }

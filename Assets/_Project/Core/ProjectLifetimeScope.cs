@@ -17,8 +17,6 @@ namespace SpaceChaser.Core
             builder.RegisterInstance<IInputReader>(_inputReader);
 
             builder.RegisterInstance(_gameConfig);
-
-            Debug.Log("project running");
         }
     }
 }

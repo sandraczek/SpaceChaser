@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SpaceChaser.Core.Building;
+using UnityEditor;
 using UnityEngine;
 
 namespace SpaceChaser.Core.Islands
@@ -20,9 +21,11 @@ namespace SpaceChaser.Core.Islands
             }
         }
 
-        private void Awake()
+        [ContextMenu("find resources")]
+        public void FindResources()
         {
             GetComponentsInChildren(resources);
+            EditorUtility.SetDirty(this);
         }
     }
 }

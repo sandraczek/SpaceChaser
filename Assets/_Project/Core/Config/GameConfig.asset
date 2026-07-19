@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9153d3c4aecae49d0a7aa7e07ae4c272, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.GameConfig
+  FloorY: 5
   SalvageRate: 0.5
-  InventorySlots: 9
+  InventorySlots: 5
+  AverageDistance: 25
+  DistanceFlactuation: 15
+  IslandMaxXFlactuation: 20
+  IslandMinX: -50
+  IslandMaxX: 50
+  MarkerMaxDistance: 15
+  MarkerMaxPlayerDistance: 20
   MaxBounds: {x: 50, y: 10000}
   MinBounds: {x: -50, y: 0}

@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5943396, g: 0.40394652, b: 0.2719384, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -170,7 +170,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5943396, g: 0.40394652, b: 0.2719384, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -331,6 +331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Player.PlayerController
   LastJumpTime: -3.4028235e+38
   <IsGrounded>k__BackingField: 0
+  Elevation: -3.4028235e+38
+  MaxElevation: -3.4028235e+38
 --- !u!114 &8855957653960694156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +345,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1689f67df192f441d8c2df6b0e96a75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Player.PlayerBuildTool
-  _build: {fileID: 11400000, guid: 4351f7d9936c2448b9a7fb576ce0d6cf, type: 2}
-  _strut: {fileID: 11400000, guid: 7f5a124aa444c425ea94df67bb7efc36, type: 2}
-  _foundation: {fileID: 11400000, guid: fdd34b12c21c843fe841d6e2f2f5d560, type: 2}

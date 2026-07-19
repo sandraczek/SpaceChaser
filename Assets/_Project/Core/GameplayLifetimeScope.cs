@@ -10,6 +10,7 @@ using SpaceChaser.Core.Highscore;
 using SpaceChaser.Core.Cam;
 using System.Collections.Generic;
 using SpaceChaser.Core.Islands;
+using UnityEditor;
 
 public class GameplayLifetimeScope : LifetimeScope
 {
@@ -18,13 +19,21 @@ public class GameplayLifetimeScope : LifetimeScope
     [SerializeField] private FoundationRegistry _foundationRegistry;
     [SerializeField] private PlayerConfig _playerConfig;
     [SerializeField] private GameObject _playerPrefab;
-    [SerializeField] private Transform _buildParent;
+    [SerializeField] private Transform _poolParent;
     [SerializeField] private BuildPreview _buildPreview;
     [SerializeField] private List<Island> _islands;
     [SerializeField] private HighscoreView _highscoreLine;
     [SerializeField] private CameraFollow _camera;
+    [SerializeField] private IslandMarker _islandMarker;
     protected override void Configure(IContainerBuilder builder)
     {
+#if UNITY_EDITOR
+        FindAllIslands();
+        foreach (var island in _islands)
+        {
+            island.FindResources();
+        }
+#endif
         builder.RegisterInstance(_playerConfig);
 
         _buildRegistry.Editor_FindAllAssets();
@@ -47,32 +56,61 @@ public class GameplayLifetimeScope : LifetimeScope
 
         builder.RegisterEntryPoint<BuildFactory>(Lifetime.Scoped)
         .AsImplementedInterfaces()
-        .WithParameter(_buildParent);
+        .WithParameter(_poolParent);
         builder.RegisterEntryPoint<StrutFactory>(Lifetime.Scoped)
         .AsImplementedInterfaces()
-        .WithParameter(_buildParent);
+        .WithParameter(_poolParent);
         builder.RegisterEntryPoint<FoundationFactory>(Lifetime.Scoped)
         .AsImplementedInterfaces()
-        .WithParameter(_buildParent);
+        .WithParameter(_poolParent);
         builder.Register<BuildService>(Lifetime.Scoped).AsImplementedInterfaces();
 
-        foreach (var island in _islands)
-            builder.RegisterComponent(island);
-        builder.RegisterEntryPoint<IslandFactory>(Lifetime.Scoped).AsImplementedInterfaces();
+        builder.RegisterInstance(_islands).As<IReadOnlyList<Island>>();
+        builder.RegisterEntryPoint<IslandFactory>(Lifetime.Scoped)
+        .AsImplementedInterfaces()
+        .WithParameter(_poolParent);
+        builder.RegisterEntryPoint<IslandService>(Lifetime.Scoped).AsImplementedInterfaces();
 
         builder.RegisterEntryPoint<InventoryService>(Lifetime.Scoped).AsImplementedInterfaces();
 
         builder.RegisterComponent(_highscoreLine);
+        builder.RegisterComponent(_islandMarker);
 
         builder.RegisterEntryPoint<GameplayEntryPoint>(Lifetime.Scoped);
+
+
     }
 
 
     /* todo
 
+        world boundaries for player
 
 
 
 
     */
+
+
+    [ContextMenu("Find all islands")]
+    public void FindAllIslands()
+    {
+        _islands ??= new();
+
+        _islands.Clear();
+
+        string[] prefabGuids = AssetDatabase.FindAssets("t:Prefab");
+
+        foreach (string guid in prefabGuids)
+        {
+            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+
+            if (prefab != null && prefab.TryGetComponent(out Island island))
+            {
+                _islands.Add(island);
+            }
+        }
+    }
 }

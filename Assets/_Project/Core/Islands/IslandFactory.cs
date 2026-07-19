@@ -14,7 +14,7 @@ namespace SpaceChaser.Core.Islands
     {
         private readonly IObjectResolver _resolver;
         private readonly List<IObjectPool<Island>> _pools = new();
-        private readonly List<Island> _islands;
+        private readonly IReadOnlyList<Island> _islands;
 
         private readonly int _defaultPoolSize = 10;
         private readonly int _maxPoolSize = 100;
@@ -22,7 +22,7 @@ namespace SpaceChaser.Core.Islands
         private readonly Transform _parent;
         private bool _initialized = false;
 
-        public IslandFactory(IObjectResolver resolver, List<Island> islands, Transform parent)
+        public IslandFactory(IObjectResolver resolver, IReadOnlyList<Island> islands, Transform parent)
         {
             _resolver = resolver;
             _parent = parent;
@@ -43,6 +43,11 @@ namespace SpaceChaser.Core.Islands
             if (!_initialized)
             {
                 Debug.LogWarning("Island Factory uninitialized!");
+                return null;
+            }
+            if (_pools.Count == 0)
+            {
+                Debug.LogWarning("No islands in factory");
                 return null;
             }
 
