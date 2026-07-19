@@ -10,5 +10,11 @@ namespace SpaceChaser.Core.Building
     {
         public ItemData Item;
         public int Amount;
+
+        public ItemAmount(ItemData item, int amount)
+        {
+            Item = item;
+            Amount = amount;
+        }
     }
 }

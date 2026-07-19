@@ -9,7 +9,6 @@ namespace SpaceChaser.Core.Building
     {
         public string DisplayName;
         public List<ItemAmount> Recipe;
-        public float Mass;
         public Build Prefab;
     }
 }

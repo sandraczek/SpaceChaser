@@ -35,6 +35,8 @@ namespace SpaceChaser.Core.Player
         [HideInInspector] public float LastGroundedTime { get; private set; } = 0f;
         [field: SerializeField] public bool IsGrounded { get; private set; }
         private bool _isFacingRight = true;
+        public float Elevation = float.MinValue;
+        public float MaxElevation = float.MinValue;
 
         [Inject]
         public void Construct(PlayerConfig config, IInputReader inputs)
@@ -60,6 +62,10 @@ namespace SpaceChaser.Core.Player
             {
                 LastGroundedTime = Time.time;
             }
+
+            Elevation = _col.bounds.max.y;
+            if (Elevation > MaxElevation)
+                MaxElevation = Elevation;
         }
         public void SetGravity(float scale)
         {
@@ -93,11 +99,6 @@ namespace SpaceChaser.Core.Player
                 else
                     transform.rotation = Quaternion.Euler(0, 180, 0);
             }
-        }
-        private void OnDrawGizmos()
-        {
-            Vector3 origin = new(_col.bounds.center.x, _col.bounds.min.y);
-            Gizmos.DrawWireCube(origin + new Vector3(0f, -_config.GroundCheckSizeY * 0.5f - _config.GroundCheckDistance * 0.5f, 0f), new Vector3(1f, _config.GroundCheckDistance + _config.GroundCheckSizeY, 0f));
         }
     }
 }

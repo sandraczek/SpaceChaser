@@ -1,11 +1,22 @@
 
 
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceChaser.Core.Building
 {
     public interface IBuildService
     {
-        void Build(Vector2 pos, BuildData data);
+        public bool Build(BuildData data, Vector2 pos, float rotation);
+        public bool BuildStrut(StrutData data, IReadOnlyList<Build> builds, Vector2 pos, float rotation);
+
+        public bool BuildFoundation(FoundationData data, IReadOnlyList<Foundation> foundations, Vector2 pos, float rotation);
+
+        public bool RemoveStrut(Strut strut);
+
+        public bool RemoveBuild(Build build);
+
+        public bool RemoveFoundation(Foundation foundation);
+        public bool RemoveResource(Resource resource);
     }
 }

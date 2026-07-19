@@ -16,6 +16,7 @@ MonoBehaviour:
     _editorId: bathtub_build
     _hash: -969146468
   DisplayName: bathtub
-  Recipe: []
-  Mass: 700
+  Recipe:
+  - Item: {fileID: 11400000, guid: e6c249ffa83a5455a862d26b794f2a0a, type: 2}
+    Amount: 40
   Prefab: {fileID: 8314186838686432859, guid: 8bc94681dce324b648a979f966782735, type: 3}

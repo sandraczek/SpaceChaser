@@ -18,12 +18,12 @@ namespace SpaceChaser.Core.Building
         private readonly int _defaultPoolSize = 10;
         private readonly int _maxPoolSize = 100;
         private readonly int _prewarmBatchSize = 5;
-        private Transform _parent;
+        private readonly Transform _parent;
 
         public BuildFactory(IObjectResolver resolver, Transform buildParent)
         {
             _resolver = resolver;
-
+            _parent = buildParent;
         }
 
         public void Dispose()
@@ -35,7 +35,7 @@ namespace SpaceChaser.Core.Building
             _pools.Clear();
         }
 
-        public Build Create(BuildData data, Vector3 position)
+        public Build Create(BuildData data, Vector3 position, float rotation)
         {
             if (!_pools.TryGetValue(data.Id, out IObjectPool<Build> pool))
             {
@@ -45,6 +45,7 @@ namespace SpaceChaser.Core.Building
 
             Build b = pool.Get();
             b.transform.position = position;
+            b.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
             b.Initialize(() =>
                 {
                     pool.Release(b);

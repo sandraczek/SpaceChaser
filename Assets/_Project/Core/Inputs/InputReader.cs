@@ -15,6 +15,7 @@ namespace SpaceChaser.Core.Inputs
         public float JumpPressedTime { get; private set; } = float.MinValue;
 
         public event Action OnPrimaryActionPressed;
+        public event Action OnSecondaryActionPressed;
 
         public void Initialize()
         {
@@ -28,6 +29,11 @@ namespace SpaceChaser.Core.Inputs
         public void OnPrimaryAction(InputAction.CallbackContext context)
         {
             if (context.performed) OnPrimaryActionPressed?.Invoke();
+        }
+
+        public void OnSecondaryAction(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnSecondaryActionPressed?.Invoke();
         }
 
         public void OnCrouch(InputAction.CallbackContext context)
@@ -57,7 +63,10 @@ namespace SpaceChaser.Core.Inputs
         {
             CursorScreenPosition = context.ReadValue<Vector2>();
         }
-
+        public Vector2 GetWorldAimPosition()
+        {
+            return Camera.main.ScreenToWorldPoint(CursorScreenPosition);
+        }
         public void OnMove(InputAction.CallbackContext context)
         {
             MovementInput = context.ReadValue<Vector2>();

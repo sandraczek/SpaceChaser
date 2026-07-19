@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 3381298336451823515}
   - component: {fileID: 1609305702014371694}
   - component: {fileID: 8855957653960694156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -344,3 +344,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Player.PlayerBuildTool
   _build: {fileID: 11400000, guid: 4351f7d9936c2448b9a7fb576ce0d6cf, type: 2}
+  _strut: {fileID: 11400000, guid: 7f5a124aa444c425ea94df67bb7efc36, type: 2}
+  _foundation: {fileID: 11400000, guid: fdd34b12c21c843fe841d6e2f2f5d560, type: 2}

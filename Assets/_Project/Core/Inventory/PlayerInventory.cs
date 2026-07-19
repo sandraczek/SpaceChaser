@@ -1,21 +1,37 @@
 using System.Collections.Generic;
+using SpaceChaser.Core.Registry;
+using UnityEngine;
 
 namespace SpaceChaser.Core.Inventory
 {
     public class PlayerInventory
     {
-        private Dictionary<int, int> _inventory;
+        private readonly Dictionary<AssetId, int> _inventory = new();
 
-        public void Add(int id, int amount)
+
+        public void DebugInitialize()
         {
-            _inventory[id] += amount;
+            _inventory.Add(new("metal"), 1000);
+            _inventory.Add(new("plastic"), 1000);
+            _inventory.Add(new("wood"), 1000);
         }
-        public void Remove(int id, int amount)
+        public void Add(AssetId id, int amount)
         {
+            if (!_inventory.ContainsKey(id))
+                _inventory.Add(id, 0);
+            _inventory[id] += amount;
+
+        }
+        public void Remove(AssetId id, int amount)
+        {
+            if (!_inventory.ContainsKey(id))
+                Debug.LogWarning("Tried to remove a item that is not in the inventory");
             _inventory[id] -= amount;
         }
-        public bool Has(int id, int amount)
+        public bool Has(AssetId id, int amount)
         {
+            if (!_inventory.ContainsKey(id))
+                return false;
             return _inventory[id] >= amount;
         }
     }

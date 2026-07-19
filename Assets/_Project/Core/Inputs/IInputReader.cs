@@ -12,5 +12,7 @@ namespace SpaceChaser.Core.Inputs
         public void ConsumeJump();
 
         event Action OnPrimaryActionPressed;
+        event Action OnSecondaryActionPressed;
+        public Vector2 GetWorldAimPosition();
     }
 }

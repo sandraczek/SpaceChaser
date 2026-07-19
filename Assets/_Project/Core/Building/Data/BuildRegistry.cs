@@ -3,6 +3,6 @@ using UnityEngine;
 
 namespace SpaceChaser.Core.Building
 {
-    [CreateAssetMenu(menuName = "Building/Registry")]
+    [CreateAssetMenu(menuName = "Building/Registry/Build")]
     public class BuildRegistry : AssetRegistry<BuildData> { }
 }

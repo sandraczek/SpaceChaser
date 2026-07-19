@@ -11,9 +11,8 @@ namespace SpaceChaser.Core.Building
 {
     public interface IBuildFactory
     {
-        public Build Create(BuildData data, Vector3 position);
+        public Build Create(BuildData data, Vector3 position, float rotation);
 
         public UniTask PrewarmPoolAsync(BuildData data, CancellationToken cancellation);
-
     }
 }

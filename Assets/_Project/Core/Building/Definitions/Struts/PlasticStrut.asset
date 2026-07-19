@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651a9954ac55b40f8b0c3d4a70cec13b, type: 3}
+  m_Name: PlasticStrut
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Building.StrutData
+  _id:
+    _editorId: plastic_strut
+    _hash: -159003262
+  DisplayName: plastic strut
+  Recipe: []
+  Prefab: {fileID: 3514400739540763842, guid: c3f3e79e5b112409b941c82c0080b7ed, type: 3}
