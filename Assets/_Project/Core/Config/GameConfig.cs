@@ -6,11 +6,17 @@ namespace SpaceChaser.Core
     public class GameConfig : ScriptableObject
     {
 
+        public Vector2 SpawnPoint;
         public float FloorY;
 
         [Header("Building")]
         public float SalvageRate;
-        public int InventorySlots;
+        public int BuildingSlots;
+        public int StrutSlots;
+        public int FoundationSlots;
+        public float BuildingTime;
+        public float SalvagingTime;
+        public float BuildingDistance;
 
         [Header("Islands")]
         public float AverageDistance;
@@ -25,5 +31,8 @@ namespace SpaceChaser.Core
         [Header("Camera")]
         public Vector2 MaxBounds;
         public Vector2 MinBounds;
+
+        [Header("Death")]
+        public float DeathDistance;
     }
 }

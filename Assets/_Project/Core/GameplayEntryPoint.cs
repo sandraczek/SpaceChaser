@@ -14,6 +14,7 @@ namespace SpaceChaser.Core
     public sealed class GameplayEntryPoint : IAsyncStartable
     {
         private readonly IPlayerSpawner _playerSpawner;
+        private readonly GameConfig _config;
         private readonly IBuildFactory _buildFactory;
         private readonly IStrutFactory _strutFactory;
         private readonly IFoundationFactory _foundationFactory;
@@ -24,6 +25,7 @@ namespace SpaceChaser.Core
         private readonly IIslandService _island;
         public GameplayEntryPoint(
             IPlayerSpawner playerSpawner,
+            GameConfig config,
             IBuildFactory buildFactory,
             IStrutFactory strutFactory,
             IFoundationFactory foundationFactory,
@@ -35,6 +37,7 @@ namespace SpaceChaser.Core
             )
         {
             _playerSpawner = playerSpawner;
+            _config = config;
             _buildFactory = buildFactory;
             _strutFactory = strutFactory;
             _foundationFactory = foundationFactory;
@@ -57,7 +60,7 @@ namespace SpaceChaser.Core
 
             _island.SetupIslands();
 
-            _playerSpawner.SpawnPlayer(new(0, 5));
+            _playerSpawner.SpawnPlayer(_config.SpawnPoint);
 
             Debug.Log("Game Loaded");
         }

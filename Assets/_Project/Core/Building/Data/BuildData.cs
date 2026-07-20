@@ -10,5 +10,7 @@ namespace SpaceChaser.Core.Building
         public string DisplayName;
         public List<ItemAmount> Recipe;
         public Build Prefab;
+
+        public Sprite Icon;
     }
 }

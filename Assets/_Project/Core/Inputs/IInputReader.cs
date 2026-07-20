@@ -11,8 +11,8 @@ namespace SpaceChaser.Core.Inputs
         float JumpPressedTime { get; }
         public void ConsumeJump();
 
-        event Action OnPrimaryActionPressed;
-        event Action OnSecondaryActionPressed;
+        event Action<bool> OnPrimaryActionHeld;
+        event Action<bool> OnSecondaryActionHeld;
         public Vector2 GetWorldAimPosition();
     }
 }

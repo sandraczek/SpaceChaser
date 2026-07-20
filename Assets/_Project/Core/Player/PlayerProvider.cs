@@ -60,5 +60,6 @@ namespace SpaceChaser.Core.Player
             OnPlayerUnregistered?.Invoke();
             _player = null;
         }
+
     }
 }

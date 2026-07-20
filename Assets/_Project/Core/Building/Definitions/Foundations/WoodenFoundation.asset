@@ -18,3 +18,4 @@ MonoBehaviour:
   DisplayName: wooden foundation
   Recipe: []
   Prefab: {fileID: 3922190770999937200, guid: 76c6f63e13b7544f19fee268d956f9c4, type: 3}
+  Icon: {fileID: -9095717837082945937, guid: 6fe190502ef8a45c4908aa3213ec8492, type: 3}

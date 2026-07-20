@@ -14,8 +14,8 @@ namespace SpaceChaser.Core.Inputs
         public bool JumpInput { get; private set; }
         public float JumpPressedTime { get; private set; } = float.MinValue;
 
-        public event Action OnPrimaryActionPressed;
-        public event Action OnSecondaryActionPressed;
+        public event Action<bool> OnPrimaryActionHeld;
+        public event Action<bool> OnSecondaryActionHeld;
 
         public void Initialize()
         {
@@ -28,12 +28,14 @@ namespace SpaceChaser.Core.Inputs
 
         public void OnPrimaryAction(InputAction.CallbackContext context)
         {
-            if (context.performed) OnPrimaryActionPressed?.Invoke();
+            if (context.performed) OnPrimaryActionHeld?.Invoke(true);
+            if (context.canceled) OnPrimaryActionHeld?.Invoke(false);
         }
 
         public void OnSecondaryAction(InputAction.CallbackContext context)
         {
-            if (context.performed) OnSecondaryActionPressed?.Invoke();
+            if (context.performed) OnSecondaryActionHeld?.Invoke(true);
+            if (context.canceled) OnSecondaryActionHeld?.Invoke(false);
         }
 
         public void OnCrouch(InputAction.CallbackContext context)

@@ -11,5 +11,7 @@ namespace SpaceChaser.Core.Building
         public List<ItemAmount> Recipe;
 
         public Foundation Prefab;
+
+        public Sprite Icon;
     }
 }

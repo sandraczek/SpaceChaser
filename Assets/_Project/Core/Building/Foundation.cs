@@ -9,6 +9,7 @@ namespace SpaceChaser.Core.Building
         public FoundationData Data;
         private Action _onDestroy;
         public bool Salvagable = true;
+        public bool Static = false;
 
         private readonly List<Foundation> _contacts = new();
 

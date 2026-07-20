@@ -11,6 +11,8 @@ using SpaceChaser.Core.Cam;
 using System.Collections.Generic;
 using SpaceChaser.Core.Islands;
 using UnityEditor;
+using SpaceChaser.Core.Death;
+using SpaceChaser.Core.HUD;
 
 public class GameplayLifetimeScope : LifetimeScope
 {
@@ -25,6 +27,7 @@ public class GameplayLifetimeScope : LifetimeScope
     [SerializeField] private HighscoreView _highscoreLine;
     [SerializeField] private CameraFollow _camera;
     [SerializeField] private IslandMarker _islandMarker;
+    [SerializeField] private InventoryView _inventoryView;
     protected override void Configure(IContainerBuilder builder)
     {
 #if UNITY_EDITOR
@@ -73,8 +76,15 @@ public class GameplayLifetimeScope : LifetimeScope
 
         builder.RegisterEntryPoint<InventoryService>(Lifetime.Scoped).AsImplementedInterfaces();
 
+        builder.RegisterEntryPoint<DeathService>(Lifetime.Scoped).AsImplementedInterfaces();
+
         builder.RegisterComponent(_highscoreLine);
         builder.RegisterComponent(_islandMarker);
+        builder.RegisterComponent(_inventoryView).AsSelf();
+        // builder.RegisterBuildCallback(resolver =>
+        // {
+        //     resolver.InjectGameObject(_inventoryView.gameObject);
+        // });
 
         builder.RegisterEntryPoint<GameplayEntryPoint>(Lifetime.Scoped);
 
@@ -85,6 +95,10 @@ public class GameplayLifetimeScope : LifetimeScope
     /* todo
 
         world boundaries for player
+        build collisions with player
+        foundation removing -> bfs
+        fix struts!!
+        check cost before starting build
 
 
 

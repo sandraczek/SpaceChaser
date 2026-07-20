@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SpaceChaser.Core.Inputs;
+using SpaceChaser.Core.Player;
 using UnityEngine;
 using VContainer;
 
@@ -9,6 +10,8 @@ namespace SpaceChaser.Core.Building
     public class BuildPreview : MonoBehaviour
     {
         private IInputReader _inputs;
+        private IPlayerProvider _player;
+        private GameConfig _config;
 
         private PolygonCollider2D _col;
         private SpriteRenderer _sprite;
@@ -17,15 +20,19 @@ namespace SpaceChaser.Core.Building
 
         private ContactFilter2D _contactFilter = new();
         private readonly List<Build> _overlappedBuildsCashed = new();
+        private readonly List<Strut> _overlappedStrutsCashed = new();
         private readonly List<Foundation> _overlappedFoundationsCashed = new();
         private readonly List<Collider2D> _overlapResults = new();
         private GameObject _currentPrefab;
         [SerializeField] private LayerMask _allTypeBuildsLayer;
+        private bool _buildMode = false;
 
         [Inject]
-        public void Construct(IInputReader inputs)
+        public void Construct(IInputReader inputs, IPlayerProvider player, GameConfig config)
         {
             _inputs = inputs;
+            _player = player;
+            _config = config;
         }
 
         private void Awake()
@@ -45,7 +52,15 @@ namespace SpaceChaser.Core.Building
         }
         private void Update()
         {
-            transform.position = _inputs.GetWorldAimPosition();
+            if (!_player.IsPlayerSpawned) return;
+            if (!_buildMode)
+            {
+                transform.position = _inputs.GetWorldAimPosition();
+                if ((_player.Transform.position - transform.position).sqrMagnitude > _config.BuildingDistance * _config.BuildingDistance)
+                    _sprite.enabled = false;
+                else
+                    _sprite.enabled = true;
+            }
         }
         public void RemoveTarget()
         {
@@ -59,6 +74,7 @@ namespace SpaceChaser.Core.Building
 
             if (targetSprite != null)
             {
+                _sprite.enabled = true;
                 _sprite.sprite = targetSprite.sprite;
                 _sprite.transform.localScale = targetSprite.transform.localScale;
                 Color color = targetSprite.color;
@@ -78,10 +94,8 @@ namespace SpaceChaser.Core.Building
             transform.rotation = Quaternion.Euler(0f, 0f, rotation);
         }
 
-        public IReadOnlyList<Build> GetAllBuildContacts(GameObject prefab)
+        public IReadOnlyList<Build> GetAllBuildContacts()
         {
-            if (_currentPrefab != prefab) SetTarget(prefab);
-
             Physics2D.SyncTransforms();
             int hits = _col.Overlap(_contactFilter, _overlapResults);
 
@@ -100,11 +114,30 @@ namespace SpaceChaser.Core.Building
 
             return _overlappedBuildsCashed;
         }
-
-        public IReadOnlyList<Foundation> GetAllFoundationContacts(GameObject prefab)
+        public IReadOnlyList<Strut> GetAllStrutContacts()
         {
-            if (_currentPrefab != prefab) SetTarget(prefab);
 
+            Physics2D.SyncTransforms();
+            int hits = _col.Overlap(_contactFilter, _overlapResults);
+
+            _overlappedStrutsCashed.Clear();
+            for (int i = 0; i < hits; i++)
+            {
+                if (_overlapResults[i] == _col) continue;
+
+                if (_overlapResults[i].TryGetComponent(out Strut strut))
+                {
+                    _overlappedStrutsCashed.Add(strut);
+                }
+            }
+
+            Debug.Log($"touching {hits} hits: {_overlappedStrutsCashed.Count} struts");
+
+            return _overlappedStrutsCashed;
+        }
+
+        public IReadOnlyList<Foundation> GetAllFoundationContacts()
+        {
             Physics2D.SyncTransforms();
             int hits = _col.Overlap(_contactFilter, _overlapResults);
 
@@ -121,7 +154,7 @@ namespace SpaceChaser.Core.Building
                 Debug.Log(_overlapResults[i].name);
             }
 
-            Debug.Log($"touching {hits} hits: {_overlappedBuildsCashed.Count} foundations");
+            Debug.Log($"touching {hits} hits: {_overlappedFoundationsCashed.Count} foundations");
 
             return _overlappedFoundationsCashed;
         }
@@ -132,6 +165,16 @@ namespace SpaceChaser.Core.Building
             Physics2D.OverlapPoint(_inputs.GetWorldAimPosition(), _contactFilter, _overlapResults);
 
             return _overlapResults;
+        }
+
+        public void StartBuilding()
+        {
+            _buildMode = true;
+        }
+
+        public void ExitBuilding()
+        {
+            _buildMode = false;
         }
     }
 }

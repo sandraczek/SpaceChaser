@@ -9,11 +9,13 @@ namespace SpaceChaser.Core.Building
         private readonly IBuildFactory _factory;
         private readonly IStrutFactory _strutFactory;
         private readonly IFoundationFactory _foundationFactory;
-        public BuildService(IBuildFactory factory, IStrutFactory strutFactory, IFoundationFactory foundationFactory)
+        private readonly BuildPreview _preview;
+        public BuildService(IBuildFactory factory, IStrutFactory strutFactory, IFoundationFactory foundationFactory, BuildPreview preview)
         {
             _factory = factory;
             _strutFactory = strutFactory;
             _foundationFactory = foundationFactory;
+            _preview = preview;
         }
 
         public bool Build(BuildData data, Vector2 pos, float rotation)
@@ -24,12 +26,6 @@ namespace SpaceChaser.Core.Building
         }
         public bool BuildStrut(StrutData data, IReadOnlyList<Build> builds, Vector2 pos, float rotation)
         {
-
-            if (builds.Count <= 1)
-            {
-                return false;
-            }
-
             Strut strut = _strutFactory.Create(data, pos, rotation);
 
             foreach (var build in builds)
@@ -42,7 +38,6 @@ namespace SpaceChaser.Core.Building
 
         public bool BuildFoundation(FoundationData data, IReadOnlyList<Foundation> foundations, Vector2 pos, float rotation)
         {
-            if (foundations.Count == 0) return false;
             var newFoundation = _foundationFactory.Create(data, pos, rotation);
 
             foreach (var foundation in foundations)
@@ -84,12 +79,6 @@ namespace SpaceChaser.Core.Building
 
         public bool RemoveFoundation(Foundation foundation)
         {
-            if (!foundation.Salvagable) return false;
-
-            foreach (Foundation contact in foundation.GetAllContacts())
-            {
-                if (contact.GetAllContacts().Count <= 1) return false;
-            }
             foundation.Remove();
 
             return true;

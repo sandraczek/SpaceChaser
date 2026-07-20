@@ -18,3 +18,4 @@ MonoBehaviour:
   DisplayName: plastic strut
   Recipe: []
   Prefab: {fileID: 3514400739540763842, guid: c3f3e79e5b112409b941c82c0080b7ed, type: 3}
+  Icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}

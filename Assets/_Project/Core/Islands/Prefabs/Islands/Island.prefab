@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5630309324639729778}
   - component: {fileID: 7586559145578649869}
   - component: {fileID: 2471068940398598088}
+  - component: {fileID: 7053977077070294122}
   m_Layer: 3
   m_Name: Island
   m_TagString: Untagged
@@ -103,6 +104,21 @@ PolygonCollider2D:
       - {x: -0.007455051, y: -1.2767055}
       - {x: 6.120941, y: -0.7995043}
   m_UseDelaunayMesh: 0
+--- !u!114 &7053977077070294122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260522979602120073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634531389db0a492e9b0f56637476943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Building.Foundation
+  Data: {fileID: 0}
+  Salvagable: 0
+  Static: 1
 --- !u!1 &3232590565302041805
 GameObject:
   m_ObjectHideFlags: 0

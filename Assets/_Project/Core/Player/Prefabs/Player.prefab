@@ -345,3 +345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1689f67df192f441d8c2df6b0e96a75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Player.PlayerBuildTool
+  _previewLayer:
+    serializedVersion: 2
+    m_Bits: 512
