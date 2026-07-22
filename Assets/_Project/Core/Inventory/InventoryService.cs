@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using SpaceChaser.Core.Building;
+using SpaceChaser.Core.Death;
 using SpaceChaser.Core.Player;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,7 +10,7 @@ using VContainer.Unity;
 
 namespace SpaceChaser.Core.Inventory
 {
-    public class InventoryService : IInventoryService, IStartable, IDisposable
+    public class InventoryService : IInventoryService, IStartable, IDisposable, IResetable
     {
         private PlayerInventory _inventory;
         private readonly IPlayerProvider _player;
@@ -32,7 +33,7 @@ namespace SpaceChaser.Core.Inventory
         public void HandlePlayerRegistered()
         {
             _inventory = new();
-            _inventory.DebugInitialize();                           // DEBUG
+            _inventory.Initialize();                           // DEBUG
         }
 
         public bool Has(IReadOnlyList<ItemAmount> items)
@@ -65,6 +66,11 @@ namespace SpaceChaser.Core.Inventory
             {
                 _inventory.Add(item.Item.Id, Mathf.RoundToInt(item.Amount * reduce));
             }
+        }
+
+        public void Reset()
+        {
+            _inventory.Reset();
         }
     }
 }

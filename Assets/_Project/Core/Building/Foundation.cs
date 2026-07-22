@@ -16,6 +16,7 @@ namespace SpaceChaser.Core.Building
         public void Initialize(Action onDestroy)
         {
             _onDestroy = onDestroy;
+            _contacts.Clear();
         }
 
         public void Remove()

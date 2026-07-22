@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using SpaceChaser.Core.Death;
 using SpaceChaser.Core.Registry;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -10,10 +11,11 @@ using VContainer.Unity;
 
 namespace SpaceChaser.Core.Building
 {
-    public class StrutFactory : IStrutFactory, IDisposable
+    public class StrutFactory : IStrutFactory, IDisposable, IResetable
     {
         private readonly IObjectResolver _resolver;
         private readonly Dictionary<AssetId, IObjectPool<Strut>> _pools = new();
+        private readonly HashSet<Strut> _activeObjects = new();
 
         private readonly int _defaultPoolSize = 10;
         private readonly int _maxPoolSize = 100;
@@ -44,12 +46,13 @@ namespace SpaceChaser.Core.Building
             }
 
             Strut b = pool.Get();
-            b.transform.position = position;
-            b.transform.rotation = Quaternion.Euler(0f, 0f, rotation);
+            b.transform.SetPositionAndRotation(position, Quaternion.Euler(0f, 0f, rotation));
             b.Initialize(() =>
                 {
+                    _activeObjects.Remove(b);
                     pool.Release(b);
                 });
+            _activeObjects.Add(b);
             return b;
         }
 
@@ -90,6 +93,14 @@ namespace SpaceChaser.Core.Building
             foreach (var b in prewarmedObjects)
             {
                 _pools[data.Id].Release(b);
+            }
+        }
+
+        public void Reset()
+        {
+            foreach (Strut strut in new HashSet<Strut>(_activeObjects))
+            {
+                strut.Remove();
             }
         }
     }

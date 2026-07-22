@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using SpaceChaser.Core.Death;
 using SpaceChaser.Core.Registry;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -10,11 +11,14 @@ using VContainer.Unity;
 
 namespace SpaceChaser.Core.Islands
 {
-    public class IslandFactory : IIslandFactory, IDisposable
+    public class IslandFactory : IIslandFactory, IDisposable, IResetable
     {
         private readonly IObjectResolver _resolver;
-        private readonly List<IObjectPool<Island>> _pools = new();
         private readonly IReadOnlyList<Island> _islands;
+
+        private readonly List<IObjectPool<Island>> _pools = new();
+        private readonly HashSet<Island> _activeObjects = new();
+
 
         private readonly int _defaultPoolSize = 10;
         private readonly int _maxPoolSize = 100;
@@ -57,8 +61,10 @@ namespace SpaceChaser.Core.Islands
             island.transform.position = position;
             island.Initialize(() =>
                 {
+                    _activeObjects.Remove(island);
                     pool.Release(island);
                 });
+            _activeObjects.Add(island);
             return island;
         }
 
@@ -110,6 +116,14 @@ namespace SpaceChaser.Core.Islands
             }
 
             _initialized = true;
+        }
+
+        public void Reset()
+        {
+            foreach (Island island in new HashSet<Island>(_activeObjects))
+            {
+                island.Remove();
+            }
         }
     }
 }

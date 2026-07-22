@@ -8,9 +8,9 @@ namespace SpaceChaser.Core.Building
     public interface IBuildService
     {
         public bool Build(BuildData data, Vector2 pos, float rotation);
-        public bool BuildStrut(StrutData data, IReadOnlyList<Build> builds, Vector2 pos, float rotation);
+        public bool BuildStrut(StrutData data, Vector2 pos, float rotation);
 
-        public bool BuildFoundation(FoundationData data, IReadOnlyList<Foundation> foundations, Vector2 pos, float rotation);
+        public bool BuildFoundation(FoundationData data, Vector2 pos, float rotation);
 
         public bool RemoveStrut(Strut strut);
 

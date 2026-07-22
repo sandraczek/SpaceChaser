@@ -45,6 +45,12 @@ namespace SpaceChaser.Core.Player
             _inputs = inputs;
         }
 
+        public void Initialize()
+        {
+            Elevation = transform.position.y;
+            MaxElevation = transform.position.y;
+        }
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();

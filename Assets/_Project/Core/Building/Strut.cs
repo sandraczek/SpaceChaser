@@ -20,7 +20,7 @@ namespace SpaceChaser.Core.Building
         {
             Rb = GetComponent<Rigidbody2D>();
 
-            Rb.inertia = 1f;
+            //Rb.inertia = 1f;
         }
         public void Initialize(Action onDestroy)
         {
@@ -32,6 +32,7 @@ namespace SpaceChaser.Core.Building
         public void Remove()
         {
             _onDestroy.Invoke();
+            _buildsAttached.Clear();
         }
 
         public void RegisterAttachment(Build build)

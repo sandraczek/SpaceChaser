@@ -21,6 +21,11 @@ namespace SpaceChaser.Core.Islands
             }
         }
 
+        public void Remove()
+        {
+            _onDestroy.Invoke();
+        }
+
         [ContextMenu("find resources")]
         public void FindResources()
         {

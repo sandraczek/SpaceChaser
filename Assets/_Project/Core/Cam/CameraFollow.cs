@@ -1,3 +1,5 @@
+using SpaceChaser.Core.Death;
+using SpaceChaser.Core.Highscore;
 using SpaceChaser.Core.Player;
 using UnityEngine;
 using VContainer;
@@ -8,6 +10,7 @@ namespace SpaceChaser.Core.Cam
     public class CameraFollow : MonoBehaviour
     {
         private IPlayerProvider _player;
+        private IHighscore _highscore;
         private GameConfig _config;
 
         private Transform _target;
@@ -17,10 +20,12 @@ namespace SpaceChaser.Core.Cam
         private Camera _cam;
 
         [Inject]
-        public void Construct(IPlayerProvider player, GameConfig config)
+        public void Construct(IPlayerProvider player, GameConfig config, IHighscore highscore)
         {
             _player = player;
             _config = config;
+
+            _highscore = highscore;
 
             _cam = GetComponent<Camera>();
         }
@@ -46,7 +51,9 @@ namespace SpaceChaser.Core.Cam
             Vector3 targetPos = _target.position;
 
             float clampedX = Mathf.Clamp(targetPos.x, _config.MinBounds.x + camHalfWidth, _config.MaxBounds.x - camHalfWidth);
-            float clampedY = Mathf.Clamp(targetPos.y, _config.MinBounds.y + camHalfHeight, _config.MaxBounds.y - camHalfHeight);
+
+            float yBorder = Mathf.Max(_config.MinBounds.y, _highscore.High - _config.DeathDistance + 3f);
+            float clampedY = Mathf.Clamp(targetPos.y, yBorder + camHalfHeight, _config.MaxBounds.y - camHalfHeight);
 
             Vector3 boundedTarget = new(clampedX, clampedY, transform.position.z);
 

@@ -24,9 +24,13 @@ namespace SpaceChaser.Core.Building
 
             return true;
         }
-        public bool BuildStrut(StrutData data, IReadOnlyList<Build> builds, Vector2 pos, float rotation)
+        public bool BuildStrut(StrutData data, Vector2 pos, float rotation)
         {
+            IReadOnlyList<Build> builds = _preview.GetAllBuildContacts();
+
             Strut strut = _strutFactory.Create(data, pos, rotation);
+
+            Physics2D.SyncTransforms();
 
             foreach (var build in builds)
             {
@@ -36,8 +40,10 @@ namespace SpaceChaser.Core.Building
             return true;
         }
 
-        public bool BuildFoundation(FoundationData data, IReadOnlyList<Foundation> foundations, Vector2 pos, float rotation)
+        public bool BuildFoundation(FoundationData data, Vector2 pos, float rotation)
         {
+            IReadOnlyList<Foundation> foundations = _preview.GetAllFoundationContacts();
+
             var newFoundation = _foundationFactory.Create(data, pos, rotation);
 
             foreach (var foundation in foundations)

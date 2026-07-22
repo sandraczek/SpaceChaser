@@ -13,6 +13,9 @@ namespace SpaceChaser.Core.Inputs
 
         event Action<bool> OnPrimaryActionHeld;
         event Action<bool> OnSecondaryActionHeld;
+        public bool RotateRightHeld { get; }
+        public bool RotateLeftHeld { get; }
+        public event Action<int> OnNumberKeyPressed;
         public Vector2 GetWorldAimPosition();
     }
 }

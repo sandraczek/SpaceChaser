@@ -55,7 +55,7 @@ public class GameplayLifetimeScope : LifetimeScope
         .AsImplementedInterfaces()
         .WithParameter(_playerPrefab);
 
-        builder.RegisterComponent(_camera);
+        builder.RegisterComponent(_camera).AsImplementedInterfaces();
 
         builder.RegisterEntryPoint<BuildFactory>(Lifetime.Scoped)
         .AsImplementedInterfaces()
@@ -86,6 +86,7 @@ public class GameplayLifetimeScope : LifetimeScope
         //     resolver.InjectGameObject(_inventoryView.gameObject);
         // });
 
+
         builder.RegisterEntryPoint<GameplayEntryPoint>(Lifetime.Scoped);
 
 
@@ -94,13 +95,25 @@ public class GameplayLifetimeScope : LifetimeScope
 
     /* todo
 
-        world boundaries for player
-        build collisions with player
-        foundation removing -> bfs
-        fix struts!!
-        check cost before starting build
+        -- features --
+        - maybe resources from death ??
+        - maybe death screen? (i think not)
+        - world boundaries for player
+        - ui for displaying resources
+        - ui for builds (f.e. cost)
+        - loading screen
+        - main menu
+        - settings menu
+        - tutorial
 
+        -- bugs --
+        ~ foundation removing -> bfs
 
+        -- game feel --
+        - arrow could not jump with player
+        - maybe build check for collisions with player
+        - render layers (f.e. foundation with floot)
+        - maybe fix the way player gets stuck in the floor after falling? not really important
 
 
     */

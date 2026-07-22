@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SpaceChaser.Core.Death;
 using SpaceChaser.Core.Player;
 using UnityEngine;
 using VContainer.Unity;
 
 namespace SpaceChaser.Core.Islands
 {
-    public class IslandService : IIslandService, IStartable, IFixedTickable
+    public class IslandService : IIslandService, IStartable, IFixedTickable, IResetable
     {
         private readonly GameConfig _config;
         private readonly IPlayerProvider _player;
@@ -15,10 +16,10 @@ namespace SpaceChaser.Core.Islands
 
         private readonly Queue<Island> _queue = new();
 
-        private float _highestIsland = float.MinValue;
+        private float _highestIsland = 0f;
         private float _lastX = 0f;
         private float _nextHeight = 0f;
-        private float _distanceToSpawn = 100f;
+        private readonly float _distanceToSpawn = 100f;
 
         public Vector2 NextIslandPosition { get; private set; } = new(0f, float.MinValue);
 
@@ -32,6 +33,9 @@ namespace SpaceChaser.Core.Islands
         public void Start()
         {
             _highestIsland = _config.FloorY;
+            _lastX = 0f;
+            _nextHeight = 0f;
+            _queue.Clear();
             CalculateNextDistance();
         }
 
@@ -84,6 +88,12 @@ namespace SpaceChaser.Core.Islands
         {
             if (_player.Transform.position.y > NextIslandPosition.y)
                 NextIslandPosition = _queue.Dequeue().transform.position;
+        }
+
+        public void Reset()
+        {
+            Start();
+            SetupIslands();
         }
     }
 }

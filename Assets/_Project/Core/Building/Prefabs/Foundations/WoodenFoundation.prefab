@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 11.094698, y: 0.7106, z: 1}
+  m_LocalScale: {x: 1.160282, y: 10.819992, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 936533476269825290}
@@ -138,6 +138,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Building.Foundation
   Data: {fileID: 11400000, guid: fdd34b12c21c843fe841d6e2f2f5d560, type: 2}
+  Salvagable: 1
+  Static: 0
 --- !u!50 &5453750882394534586
 Rigidbody2D:
   serializedVersion: 5
@@ -211,10 +213,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.33594465, y: 0.4121284}
-      - {x: -2.5590167, y: 0.3665799}
-      - {x: -5.5623546, y: 0.35969058}
-      - {x: -5.5791354, y: -0.35295475}
-      - {x: 5.553798, y: -0.3782913}
-      - {x: 5.537018, y: 0.35969067}
+    - - {x: -0.5767021, y: 5.4667892}
+      - {x: -0.628417, y: -5.3901176}
+      - {x: 0.6155648, y: -5.397007}
+      - {x: 0.63388586, y: -0.31785297}
+      - {x: 0.5693407, y: 2.7808719}
+      - {x: 0.5876627, y: 5.4845552}
   m_UseDelaunayMesh: 0

@@ -36,12 +36,12 @@ namespace SpaceChaser.Core.Player
         private bool _secondaryHeld = false;
 
         private ContactFilter2D _previewContactFilter = new();
-        private IReadOnlyList<Build> _cashedBuilds;
-        private IReadOnlyList<Foundation> _cashedFoundations;
         private readonly List<Collider2D> _overlapResults = new();
         [SerializeField] private LayerMask _previewLayer;
 
+#pragma warning disable IDE1006
         private event Action _finishSalvage;
+#pragma warning restore IDE1006
         private Collider2D _currentSalvagable;
 
         [Inject]
@@ -83,9 +83,16 @@ namespace SpaceChaser.Core.Player
         }
         private void FixedUpdate()
         {
+            if (_buildTimer == 0f)
+            {
+                if (_inputs.RotateRightHeld) _currentRotation -= _config.RotationPerSecond * Time.fixedDeltaTime;
+                if (_inputs.RotateLeftHeld) _currentRotation += _config.RotationPerSecond * Time.fixedDeltaTime;
+                _preview.SetRotation(_currentRotation);
+            }
+
             if (_buildTimer > 0f && (_preview.transform.position - transform.position).sqrMagnitude > _config.BuildingDistance * _config.BuildingDistance)
             {
-                EndBuildMode();
+                FinishBuildMode();
             }
             if (_primaryHeld && Physics2D.OverlapPoint(_inputs.GetWorldAimPosition(), _previewContactFilter, _overlapResults) > 0)
             {
@@ -110,12 +117,14 @@ namespace SpaceChaser.Core.Player
         {
             _inputs.OnPrimaryActionHeld += HandlePrimaryAction;
             _inputs.OnSecondaryActionHeld += HandleSecondaryAction;
+            _inputs.OnNumberKeyPressed += SelectAt;
             _inventoryView.OnSelected += SelectAt;
         }
         public void OnDisable()
         {
             _inputs.OnPrimaryActionHeld -= HandlePrimaryAction;
             _inputs.OnSecondaryActionHeld -= HandleSecondaryAction;
+            _inputs.OnNumberKeyPressed -= SelectAt;
             _inventoryView.OnSelected -= SelectAt;
         }
 
@@ -209,8 +218,8 @@ namespace SpaceChaser.Core.Player
         private bool CheckStrut()
         {
             if (!_inventory.Has(_struts[_index].Recipe)) return false;
-            _cashedBuilds = _preview.GetAllBuildContacts();
-            if (_cashedBuilds.Count <= 1) return false;
+            IReadOnlyList<Build> buildContacts = _preview.GetAllBuildContacts();
+            if (buildContacts.Count <= 1) return false;
 
             IReadOnlyList<Strut> struts = _preview.GetAllStrutContacts();
             if (struts.Count != 0) return false;
@@ -220,8 +229,8 @@ namespace SpaceChaser.Core.Player
         private bool CheckFoundation()
         {
             if (!_inventory.Has(_foundations[_index].Recipe)) return false;
-            _cashedFoundations = _preview.GetAllFoundationContacts();
-            if (_cashedFoundations.Count == 0) return false;
+            IReadOnlyList<Foundation> foundations = _preview.GetAllFoundationContacts();
+            if (foundations.Count == 0) return false;
 
             IReadOnlyList<Build> builds = _preview.GetAllBuildContacts();
             if (builds.Count != 0) return false;
@@ -245,13 +254,13 @@ namespace SpaceChaser.Core.Player
         private void FinishSalvaging()
         {
             _finishSalvage?.Invoke();
-            EndBuildMode();
+            FinishBuildMode();
         }
 
         private void FinishBuilding()
         {
-            EndBuildMode();
             if (_index < 0) return;
+            if (!CheckAny()) return; // failed last check
 
             List<ItemAmount> recipe = null;
 
@@ -268,23 +277,23 @@ namespace SpaceChaser.Core.Player
                 case BuildMode.Strut:
                     var strut = _struts[_index];
                     recipe = strut.Recipe;
-                    _buildService.BuildStrut(strut, _cashedBuilds, _preview.transform.position, _currentRotation);
+                    _buildService.BuildStrut(strut, _preview.transform.position, _currentRotation);
 
                     break;
                 case BuildMode.Foundation:
                     var foundation = _foundations[_index];
                     recipe = foundation.Recipe;
-                    _buildService.BuildFoundation(foundation, _cashedFoundations, _preview.transform.position, 0f);
-
-                    ////////// FIXED ROTATION -------------------------/// -------------    HERE
+                    _buildService.BuildFoundation(foundation, _preview.transform.position, _currentRotation);
 
                     break;
             }
+            FinishBuildMode();
             _inventory.Remove(recipe);
             RandomizeBuilds();
         }
         private void SelectAt(int index)
         {
+            index--;
             if (index < 0) UnselectBuild();
             else if (index < _config.BuildingSlots) SelectBuildAt(index);
             else if (index < _config.BuildingSlots + _config.StrutSlots) SelectStrutAt(index - _config.BuildingSlots);
@@ -302,7 +311,7 @@ namespace SpaceChaser.Core.Player
             var build = _builds[index];
             _preview.SetTarget(build.Prefab.gameObject);
 
-            EndBuildMode();
+            FinishBuildMode();
         }
         private void SelectStrutAt(int index)
         {
@@ -313,7 +322,7 @@ namespace SpaceChaser.Core.Player
             var strut = _struts[index];
             _preview.SetTarget(strut.Prefab.gameObject);
 
-            EndBuildMode();
+            FinishBuildMode();
         }
         private void SelectFoundationAt(int index)
         {
@@ -324,10 +333,10 @@ namespace SpaceChaser.Core.Player
             var foundation = _foundations[index];
             _preview.SetTarget(foundation.Prefab.gameObject);
 
-            EndBuildMode();
+            FinishBuildMode();
         }
 
-        private void EndBuildMode()
+        private void FinishBuildMode()
         {
             _buildTimer = 0f;
             _primaryHeld = false;
@@ -387,6 +396,12 @@ namespace SpaceChaser.Core.Player
                 _foundations.Add(data);
                 _inventoryView.SetOnIndex(_config.BuildingSlots + _config.StrutSlots + i, data.Icon);
             }
+        }
+        public void ResetState()
+        {
+            UnselectBuild();
+            _secondaryHeld = false;
+            RandomizeBuilds();
         }
 
         private enum BuildMode

@@ -14,6 +14,7 @@ namespace SpaceChaser.Core.Building
         public void Initialize(Action onDestroy)
         {
             _onDestroy = onDestroy;
+            _joints.Clear();
         }
 
         public void Remove()
@@ -33,6 +34,7 @@ namespace SpaceChaser.Core.Building
             var joint = gameObject.AddComponent<FixedJoint2D>();
             _joints.Add(strut, joint);
 
+            joint.enableCollision = false;
             joint.connectedBody = strut.Rb;
 
             strut.RegisterAttachment(this);

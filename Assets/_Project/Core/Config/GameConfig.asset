@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.GameConfig
   SpawnPoint: {x: 0, y: 3}
   FloorY: 0.75
+  RotationPerSecond: 180
   SalvageRate: 0.5
   BuildingSlots: 5
   StrutSlots: 3
   FoundationSlots: 3
-  BuildingTime: 0
-  SalvagingTime: 0
+  BuildingTime: 0.3
+  SalvagingTime: 7
   BuildingDistance: 8
   AverageDistance: 25
   DistanceFlactuation: 15

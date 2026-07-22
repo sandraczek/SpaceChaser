@@ -16,6 +16,9 @@ namespace SpaceChaser.Core.Inputs
 
         public event Action<bool> OnPrimaryActionHeld;
         public event Action<bool> OnSecondaryActionHeld;
+        public bool RotateRightHeld { get; private set; } = false;
+        public bool RotateLeftHeld { get; private set; } = false;
+        public event Action<int> OnNumberKeyPressed;
 
         public void Initialize()
         {
@@ -91,6 +94,80 @@ namespace SpaceChaser.Core.Inputs
         public void ConsumeJump()
         {
             JumpPressedTime = float.MinValue;
+        }
+
+        public void OnRotateRight(InputAction.CallbackContext context)
+        {
+            if (context.performed) RotateRightHeld = true;
+            if (context.canceled) RotateRightHeld = false;
+        }
+
+        public void OnRotateLeft(InputAction.CallbackContext context)
+        {
+            if (context.performed) RotateLeftHeld = true;
+            if (context.canceled) RotateLeftHeld = false;
+        }
+
+        public void OnKeyn(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(0);
+        }
+        public void OnKey1(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(1);
+        }
+
+        public void OnKey2(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(2);
+        }
+
+        public void OnKey3(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(3);
+        }
+
+        public void OnKey4(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(4);
+        }
+
+        public void OnKey5(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(5);
+        }
+
+        public void OnKey6(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(6);
+        }
+
+        public void OnKey7(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(7);
+        }
+
+        public void OnKey8(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(8);
+        }
+
+        public void OnKey9(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(9);
+        }
+
+        public void OnKey10(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(10);
+        }
+        public void OnKey11(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnNumberKeyPressed?.Invoke(11);
+        }
+        public void OnKey12(InputAction.CallbackContext context)
+        {
+            //if (context.performed) OnNumberKeyPressed?.Invoke(12);
         }
     }
 }

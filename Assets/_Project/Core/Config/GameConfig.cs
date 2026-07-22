@@ -9,6 +9,9 @@ namespace SpaceChaser.Core
         public Vector2 SpawnPoint;
         public float FloorY;
 
+        [Header("Controls")]
+        public float RotationPerSecond;
+
         [Header("Building")]
         public float SalvageRate;
         public int BuildingSlots;

@@ -6,10 +6,10 @@ namespace SpaceChaser.Core.Inventory
 {
     public class PlayerInventory
     {
-        private readonly Dictionary<AssetId, int> _inventory = new();
+        private Dictionary<AssetId, int> _inventory = new();
 
 
-        public void DebugInitialize()
+        public void Initialize()
         {
             _inventory.Add(new("metal"), 1000);
             _inventory.Add(new("plastic"), 1000);
@@ -33,6 +33,12 @@ namespace SpaceChaser.Core.Inventory
             if (!_inventory.ContainsKey(id))
                 return false;
             return _inventory[id] >= amount;
+        }
+
+        public void Reset()
+        {
+            _inventory = new();
+            Initialize();
         }
     }
 }
