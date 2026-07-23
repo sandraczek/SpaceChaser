@@ -100,6 +100,7 @@ public class GameplayLifetimeScope : LifetimeScope
         - maybe resources from death ??
         - maybe death screen? (i think not)
         - world boundaries for player
+        - all time highscore
         - ui for displaying resources
         - ui for builds (f.e. cost)
         - loading screen
