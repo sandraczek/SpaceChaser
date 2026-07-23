@@ -10,6 +10,8 @@ namespace SpaceChaser.Core.Islands
         private IPlayerProvider _player;
         private GameConfig _config;
 
+        private Camera _mainCamera;
+
         [Inject]
         public void Construct(IIslandService island, IPlayerProvider player, GameConfig config)
         {
@@ -18,27 +20,30 @@ namespace SpaceChaser.Core.Islands
             _config = config;
         }
 
-        private void FixedUpdate()
+        private void Start()
+        {
+            _mainCamera = Camera.main;
+        }
+
+        private void LateUpdate()
         {
             if (!_player.IsPlayerSpawned) return;
 
-            Vector2 playerPos = _player.Transform.position;
+            Vector2 anchorPos = _mainCamera.transform.position;
             Vector2 targetPos = _island.NextIslandPosition;
 
-            Vector2 heading = targetPos - playerPos;
-            float playerDistance = heading.magnitude;
+            Vector2 heading = targetPos - anchorPos;
+            float distanceToTarget = heading.magnitude;
 
-            if (playerDistance <= 0.001f) return;
+            if (distanceToTarget <= 0.001f) return;
 
-            Vector2 directionVector = heading / playerDistance;
+            Vector2 directionVector = heading / distanceToTarget;
 
-            float playerDistanceRatio = Mathf.Clamp01(playerDistance / _config.MarkerMaxPlayerDistance);
-            float markerDistance = _config.MarkerMaxDistance * playerDistanceRatio;
+            float distanceRatio = Mathf.Clamp01(distanceToTarget / _config.MarkerMaxPlayerDistance);
+            float markerDistance = _config.MarkerMaxDistance * distanceRatio;
 
-            Vector2 finalPosition = playerPos + (directionVector * markerDistance);
-
+            Vector2 finalPosition = anchorPos + (directionVector * markerDistance);
             float angle = Mathf.Atan2(directionVector.y, directionVector.x) * Mathf.Rad2Deg;
-
             Quaternion finalRotation = Quaternion.Euler(0f, 0f, angle);
 
             transform.SetPositionAndRotation(finalPosition, finalRotation);

@@ -28,6 +28,7 @@ public class GameplayLifetimeScope : LifetimeScope
     [SerializeField] private CameraFollow _camera;
     [SerializeField] private IslandMarker _islandMarker;
     [SerializeField] private InventoryView _inventoryView;
+    [SerializeField] private WorldBorder _border;
     protected override void Configure(IContainerBuilder builder)
     {
 #if UNITY_EDITOR
@@ -76,15 +77,15 @@ public class GameplayLifetimeScope : LifetimeScope
 
         builder.RegisterEntryPoint<InventoryService>(Lifetime.Scoped).AsImplementedInterfaces();
 
-        builder.RegisterEntryPoint<DeathService>(Lifetime.Scoped).AsImplementedInterfaces();
-
-        builder.RegisterComponent(_highscoreLine);
+        builder.RegisterComponent(_border);
+        builder.RegisterComponent(_highscoreLine).AsImplementedInterfaces();
         builder.RegisterComponent(_islandMarker);
         builder.RegisterComponent(_inventoryView).AsSelf();
         // builder.RegisterBuildCallback(resolver =>
         // {
         //     resolver.InjectGameObject(_inventoryView.gameObject);
         // });
+        builder.RegisterEntryPoint<DeathService>(Lifetime.Scoped).AsImplementedInterfaces();
 
 
         builder.RegisterEntryPoint<GameplayEntryPoint>(Lifetime.Scoped);
@@ -96,11 +97,6 @@ public class GameplayLifetimeScope : LifetimeScope
     /* todo
 
         -- features --
-        - make islands go-through from the bottom
-        - maybe resources from death ??
-        - maybe death screen? (i think not)
-        - world boundaries for player
-        - all time highscore
         - ui for displaying resources
         - ui for builds (f.e. cost)
         - loading screen
@@ -108,14 +104,15 @@ public class GameplayLifetimeScope : LifetimeScope
         - settings menu
         - tutorial
 
-        -- bugs --
-        ~ foundation removing -> bfs
+        -- to test --
+        - holding LMB and RMB at the same time
 
         -- game feel --
-        - arrow could not jump with player
-        - maybe build check for collisions with player
-        - render layers (f.e. foundation with floot)
-        - maybe fix the way player gets stuck in the floor after falling? not really important
+        - starting items
+        - objects weight (and player)
+        - recipes
+        - display meters in highscore view
+        - render layers (f.e. foundation with floor, strut with builds)
 
 
     */

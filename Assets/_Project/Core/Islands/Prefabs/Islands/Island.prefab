@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7586559145578649869}
   - component: {fileID: 2471068940398598088}
   - component: {fileID: 7053977077070294122}
+  - component: {fileID: 3662593847654821915}
   m_Layer: 3
   m_Name: Island
   m_TagString: Untagged
@@ -82,7 +83,7 @@ PolygonCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
@@ -97,12 +98,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 23.235567, y: 0.7036724}
-      - {x: -23.25752, y: 0.5547037}
-      - {x: -9.1776705, y: -0.5319214}
-      - {x: -4.6351433, y: -0.959443}
-      - {x: -0.007455051, y: -1.2767055}
-      - {x: 6.120941, y: -0.7995043}
+    - - {x: 23.669369, y: 0.62162113}
+      - {x: -23.668406, y: 0.628844}
+      - {x: -19.66695, y: 0.29115105}
+      - {x: 19.322851, y: 0.26568043}
   m_UseDelaunayMesh: 0
 --- !u!114 &7053977077070294122
 MonoBehaviour:
@@ -119,6 +118,25 @@ MonoBehaviour:
   Data: {fileID: 0}
   Salvagable: 0
   Static: 1
+--- !u!251 &3662593847654821915
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260522979602120073}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &3232590565302041805
 GameObject:
   m_ObjectHideFlags: 0

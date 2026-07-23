@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee525c16280f24b48972c0b3e23f2d20, type: 3}
-  m_Name: MetalPallet
+  m_Name: Sink
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Building.BuildData
   _id:
-    _editorId: metal_pallet
-    _hash: 245973471
-  DisplayName: metal pallet
+    _editorId: sink
+    _hash: 298998226
+  DisplayName: sink
   Recipe: []
-  Prefab: {fileID: 8314186838686432859, guid: a08985f6c877b4443b4bec15eb9500f5, type: 3}
-  Icon: {fileID: 1277467883169801574, guid: bfe8dc8660a9b4164b3f35e63d15d654, type: 3}
+  Prefab: {fileID: 8314186838686432859, guid: dcc089ff7248c4d0cbe4ec18c862d45c, type: 3}
+  Icon: {fileID: -2843410814597151157, guid: 333d4a39bbfd346d0bce85e6d864874f, type: 3}

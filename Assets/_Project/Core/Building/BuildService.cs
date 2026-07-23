@@ -57,7 +57,7 @@ namespace SpaceChaser.Core.Building
 
         public bool RemoveStrut(Strut strut)
         {
-            var builds = strut.GetAttached();
+            List<Build> builds = new(strut.GetAttached());
 
             foreach (Build build in builds)
             {

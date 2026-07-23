@@ -86,7 +86,7 @@ namespace SpaceChaser.Core.Player
         public void Reset()
         {
             Transform.position = _spawnPosition;
-            AllTimeHigh = High;
+            AllTimeHigh = Mathf.Max(High, AllTimeHigh);
             _controller.Initialize();
             _build.ResetState();
         }

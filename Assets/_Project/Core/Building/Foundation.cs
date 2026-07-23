@@ -43,5 +43,35 @@ namespace SpaceChaser.Core.Building
             }
         }
         public IReadOnlyList<Foundation> GetAllContacts() => _contacts;
+
+        public bool HasConnectionToFloor(HashSet<Foundation> visited)
+        {
+            if (Static) return true;
+            visited.Add(this);
+            foreach (Foundation contact in _contacts)
+            {
+                if (visited.Contains(contact)) continue;
+
+                if (contact.HasConnectionToFloor(visited)) return true;
+            }
+
+            return false;
+        }
+        public bool CheckRemove(HashSet<Foundation> dfsBuffer)
+        {
+            foreach (var neighbor in _contacts)
+            {
+                dfsBuffer.Clear();
+                dfsBuffer.Add(this);
+
+                if (!neighbor.HasConnectionToFloor(dfsBuffer))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
     }
 }

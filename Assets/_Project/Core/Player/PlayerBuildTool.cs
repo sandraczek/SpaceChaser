@@ -31,12 +31,13 @@ namespace SpaceChaser.Core.Player
         private int _index;
         private BuildMode _mode = BuildMode.Cursor;
         private float _currentRotation = 0f;
-        private float _buildTimer = 0f;
+        [SerializeField] private float _buildTimer = 0f;
         private bool _primaryHeld = false;
-        private bool _secondaryHeld = false;
+        [SerializeField] private bool _secondaryHeld = false;
 
         private ContactFilter2D _previewContactFilter = new();
         private readonly List<Collider2D> _overlapResults = new();
+        private readonly HashSet<Foundation> _dfsBuffer = new();
         [SerializeField] private LayerMask _previewLayer;
 
 #pragma warning disable IDE1006
@@ -90,9 +91,25 @@ namespace SpaceChaser.Core.Player
                 _preview.SetRotation(_currentRotation);
             }
 
-            if (_buildTimer > 0f && (_preview.transform.position - transform.position).sqrMagnitude > _config.BuildingDistance * _config.BuildingDistance)
+            if (_buildTimer > 0f)
             {
-                FinishBuildMode();
+                float maxDistSq = _config.BuildingDistance * _config.BuildingDistance;
+                bool isTooFar;
+
+                if (_mode != BuildMode.Cursor)
+                {
+                    isTooFar = (_preview.transform.position - transform.position).sqrMagnitude > maxDistSq;
+                }
+                else
+                {
+                    isTooFar = (_inputs.GetWorldAimPosition() - (Vector2)transform.position).sqrMagnitude > maxDistSq;
+                }
+
+                if (isTooFar)
+                {
+                    EndBuildMode();
+                    return;
+                }
             }
             if (_primaryHeld && Physics2D.OverlapPoint(_inputs.GetWorldAimPosition(), _previewContactFilter, _overlapResults) > 0)
             {
@@ -107,7 +124,7 @@ namespace SpaceChaser.Core.Player
             {
                 _buildTimer += Time.fixedDeltaTime;
 
-                if (_buildTimer >= _config.BuildingTime)
+                if (_buildTimer >= _config.SalvagingTime)
                 {
                     FinishSalvaging();
                 }
@@ -207,6 +224,9 @@ namespace SpaceChaser.Core.Player
         private bool CheckBuild()
         {
             if (!_inventory.Has(_builds[_index].Recipe)) return false;
+
+            if (_preview.IsTouchingPlayer()) return false;
+
             IReadOnlyList<Build> buildContacts = _preview.GetAllBuildContacts();
             if (buildContacts.Count != 0) return false;
 
@@ -218,6 +238,9 @@ namespace SpaceChaser.Core.Player
         private bool CheckStrut()
         {
             if (!_inventory.Has(_struts[_index].Recipe)) return false;
+
+            if (_preview.IsTouchingPlayer()) return false;
+
             IReadOnlyList<Build> buildContacts = _preview.GetAllBuildContacts();
             if (buildContacts.Count <= 1) return false;
 
@@ -241,12 +264,7 @@ namespace SpaceChaser.Core.Player
         {
             if (!foundation.Salvagable) return false;
 
-            foreach (Foundation contact in foundation.GetAllContacts())
-            {
-                if (contact.GetAllContacts().Count <= 1 && !contact.Static) return false;
-            }
-
-            return true;
+            return foundation.CheckRemove(_dfsBuffer);
         }
 
 
@@ -254,7 +272,7 @@ namespace SpaceChaser.Core.Player
         private void FinishSalvaging()
         {
             _finishSalvage?.Invoke();
-            FinishBuildMode();
+            EndBuildMode();
         }
 
         private void FinishBuilding()
@@ -272,6 +290,7 @@ namespace SpaceChaser.Core.Player
                     var build = _builds[_index];
                     recipe = build.Recipe;
                     _buildService.Build(build, _preview.transform.position, _currentRotation);
+                    RandomizeBuilds();
 
                     break;
                 case BuildMode.Strut:
@@ -287,9 +306,9 @@ namespace SpaceChaser.Core.Player
 
                     break;
             }
-            FinishBuildMode();
+            EndBuildMode();
+            UnselectBuild();
             _inventory.Remove(recipe);
-            RandomizeBuilds();
         }
         private void SelectAt(int index)
         {
@@ -310,7 +329,7 @@ namespace SpaceChaser.Core.Player
             var build = _builds[index];
             _preview.SetTarget(build.Prefab.gameObject);
 
-            FinishBuildMode();
+            EndBuildMode();
         }
         private void SelectStrutAt(int index)
         {
@@ -321,7 +340,7 @@ namespace SpaceChaser.Core.Player
             var strut = _struts[index];
             _preview.SetTarget(strut.Prefab.gameObject);
 
-            FinishBuildMode();
+            EndBuildMode();
         }
         private void SelectFoundationAt(int index)
         {
@@ -332,10 +351,10 @@ namespace SpaceChaser.Core.Player
             var foundation = _foundations[index];
             _preview.SetTarget(foundation.Prefab.gameObject);
 
-            FinishBuildMode();
+            EndBuildMode();
         }
 
-        private void FinishBuildMode()
+        private void EndBuildMode()
         {
             _buildTimer = 0f;
             _primaryHeld = false;

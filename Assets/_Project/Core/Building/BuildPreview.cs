@@ -19,6 +19,7 @@ namespace SpaceChaser.Core.Building
         [SerializeField] private float _transparency = 0.5f;
 
         private ContactFilter2D _contactFilter = new();
+        private ContactFilter2D _playerContactFilter = new();
         private readonly List<Build> _overlappedBuildsCashed = new();
         private readonly List<Strut> _overlappedStrutsCashed = new();
         private readonly List<Foundation> _overlappedFoundationsCashed = new();
@@ -43,6 +44,10 @@ namespace SpaceChaser.Core.Building
             _contactFilter.useTriggers = false;
             _contactFilter.useLayerMask = true;
             _contactFilter.layerMask = _allTypeBuildsLayer;
+            _playerContactFilter.useTriggers = false;
+            _playerContactFilter.useLayerMask = true;
+            _playerContactFilter.layerMask = LayerMask.GetMask("Player");//_playerLayer;
+
         }
         private void Start()
         {
@@ -76,6 +81,8 @@ namespace SpaceChaser.Core.Building
             {
                 _sprite.enabled = true;
                 _sprite.sprite = targetSprite.sprite;
+                _sprite.transform.localPosition = targetSprite.transform.localPosition;
+                _sprite.transform.localRotation = targetSprite.transform.localRotation;
                 _sprite.transform.localScale = targetSprite.transform.localScale;
                 Color color = targetSprite.color;
                 color.a = _transparency;
@@ -94,6 +101,14 @@ namespace SpaceChaser.Core.Building
             transform.rotation = Quaternion.Euler(0f, 0f, rotation);
         }
 
+        public bool IsTouchingPlayer()
+        {
+            Physics2D.SyncTransforms();
+            int hits = _col.Overlap(_playerContactFilter, _overlapResults);
+
+            return hits > 0;
+        }
+
         public IReadOnlyList<Build> GetAllBuildContacts()
         {
             Physics2D.SyncTransforms();
@@ -110,7 +125,7 @@ namespace SpaceChaser.Core.Building
                 }
             }
 
-            Debug.Log($"touching {hits} hits: {_overlappedBuildsCashed.Count} builds");
+            //Debug.Log($"touching {hits} hits: {_overlappedBuildsCashed.Count} builds");
 
             return _overlappedBuildsCashed;
         }
@@ -131,7 +146,7 @@ namespace SpaceChaser.Core.Building
                 }
             }
 
-            Debug.Log($"touching {hits} hits: {_overlappedStrutsCashed.Count} struts");
+            //Debug.Log($"touching {hits} hits: {_overlappedStrutsCashed.Count} struts");
 
             return _overlappedStrutsCashed;
         }
@@ -154,7 +169,7 @@ namespace SpaceChaser.Core.Building
                 Debug.Log(_overlapResults[i].name);
             }
 
-            Debug.Log($"touching {hits} hits: {_overlappedFoundationsCashed.Count} foundations");
+            //Debug.Log($"touching {hits} hits: {_overlappedFoundationsCashed.Count} foundations");
 
             return _overlappedFoundationsCashed;
         }

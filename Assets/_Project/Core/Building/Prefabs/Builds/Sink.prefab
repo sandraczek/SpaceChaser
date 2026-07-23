@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4182577147816767025}
   - component: {fileID: 662594968962135750}
   m_Layer: 3
-  m_Name: MetalPallet
+  m_Name: Sink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b055084d8f7245b0a155ed9e1901ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Building.Build
-  Data: {fileID: 11400000, guid: 00b7afbbde3124ab0a76090527be3331, type: 2}
+  Data: {fileID: 11400000, guid: 9d86efa93e14747629e9909df552c3f0, type: 2}
 --- !u!50 &4182577147816767025
 Rigidbody2D:
   serializedVersion: 5
@@ -121,10 +121,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.7749557, y: 1.7915342}
-      - {x: -1.7905061, y: 1.796125}
-      - {x: -1.7925024, y: -1.7705352}
-      - {x: 1.7626169, y: -1.7684357}
+    - - {x: 1.7633753, y: 0.8998924}
+      - {x: -1.7673466, y: 0.8929035}
+      - {x: -1.7693429, y: -0.8904731}
+      - {x: 1.7626169, y: -0.8883736}
   m_UseDelaunayMesh: 0
 --- !u!1 &6943626129859380685
 GameObject:
@@ -205,7 +205,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1277467883169801574, guid: bfe8dc8660a9b4164b3f35e63d15d654, type: 3}
+  m_Sprite: {fileID: -2843410814597151157, guid: 333d4a39bbfd346d0bce85e6d864874f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

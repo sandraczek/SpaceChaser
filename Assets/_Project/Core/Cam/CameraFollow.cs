@@ -52,7 +52,7 @@ namespace SpaceChaser.Core.Cam
 
             float clampedX = Mathf.Clamp(targetPos.x, _config.MinBounds.x + camHalfWidth, _config.MaxBounds.x - camHalfWidth);
 
-            float yBorder = Mathf.Max(_config.MinBounds.y, _highscore.High - _config.DeathDistance + 3f);
+            float yBorder = Mathf.Max(_config.MinBounds.y, _highscore.High - _config.DeathDistance + 2f);
             float clampedY = Mathf.Clamp(targetPos.y, yBorder + camHalfHeight, _config.MaxBounds.y - camHalfHeight);
 
             Vector3 boundedTarget = new(clampedX, clampedY, transform.position.z);

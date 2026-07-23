@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee525c16280f24b48972c0b3e23f2d20, type: 3}
+  m_Name: Supports
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Building.BuildData
+  _id:
+    _editorId: supports
+    _hash: -574571519
+  DisplayName: supports
+  Recipe: []
+  Prefab: {fileID: 8314186838686432859, guid: a08985f6c877b4443b4bec15eb9500f5, type: 3}
+  Icon: {fileID: 1277467883169801574, guid: bfe8dc8660a9b4164b3f35e63d15d654, type: 3}
