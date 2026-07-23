@@ -36,16 +36,16 @@ public class GameplayLifetimeScope : LifetimeScope
         {
             island.FindResources();
         }
+        _buildRegistry.Editor_FindAllAssets();
+        _strutRegistry.Editor_FindAllAssets();
+        _foundationRegistry.Editor_FindAllAssets();
 #endif
         builder.RegisterInstance(_playerConfig);
 
-        _buildRegistry.Editor_FindAllAssets();
         _buildRegistry.Initialize();
         builder.RegisterInstance(_buildRegistry).As<IAssetRegistry<BuildData>>();
-        _strutRegistry.Editor_FindAllAssets();
         _strutRegistry.Initialize();
         builder.RegisterInstance(_strutRegistry).As<IAssetRegistry<StrutData>>();
-        _foundationRegistry.Editor_FindAllAssets();
         _foundationRegistry.Initialize();
         builder.RegisterInstance(_foundationRegistry).As<IAssetRegistry<FoundationData>>();
 
@@ -96,6 +96,7 @@ public class GameplayLifetimeScope : LifetimeScope
     /* todo
 
         -- features --
+        - make islands go-through from the bottom
         - maybe resources from death ??
         - maybe death screen? (i think not)
         - world boundaries for player

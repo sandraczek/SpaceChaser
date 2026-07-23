@@ -63,6 +63,15 @@ namespace SpaceChaser.Core
             _playerSpawner.SpawnPlayer(_config.SpawnPoint);
 
             Debug.Log("Game Loaded");
+
+            //debug
+
+            for (int i = 0; i < _buildRegistry.Assets.Count; i++)
+            {
+                var build = _buildRegistry.Assets[i];
+                Vector3 pos = new((i - _buildRegistry.Assets.Count / 2) * 60f / _buildRegistry.Assets.Count, 3f, 0f);
+                _buildFactory.Create(build, pos, 0f);
+            }
         }
     }
 }

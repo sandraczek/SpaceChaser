@@ -110,64 +110,64 @@ namespace SpaceChaser.Core.Inputs
 
         public void OnKeyn(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(0);
+            if (context.performed) OnNumberKeyPressed?.Invoke(-1);
         }
         public void OnKey1(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(1);
+            if (context.performed) OnNumberKeyPressed?.Invoke(0);
         }
 
         public void OnKey2(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(2);
+            if (context.performed) OnNumberKeyPressed?.Invoke(1);
         }
 
         public void OnKey3(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(3);
+            if (context.performed) OnNumberKeyPressed?.Invoke(2);
         }
 
         public void OnKey4(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(4);
+            if (context.performed) OnNumberKeyPressed?.Invoke(3);
         }
 
         public void OnKey5(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(5);
+            if (context.performed) OnNumberKeyPressed?.Invoke(4);
         }
 
         public void OnKey6(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(6);
+            if (context.performed) OnNumberKeyPressed?.Invoke(5);
         }
 
         public void OnKey7(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(7);
+            if (context.performed) OnNumberKeyPressed?.Invoke(6);
         }
 
         public void OnKey8(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(8);
+            if (context.performed) OnNumberKeyPressed?.Invoke(7);
         }
 
         public void OnKey9(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(9);
+            if (context.performed) OnNumberKeyPressed?.Invoke(8);
         }
 
         public void OnKey10(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(10);
+            if (context.performed) OnNumberKeyPressed?.Invoke(9);
         }
         public void OnKey11(InputAction.CallbackContext context)
         {
-            if (context.performed) OnNumberKeyPressed?.Invoke(11);
+            if (context.performed) OnNumberKeyPressed?.Invoke(10);
         }
         public void OnKey12(InputAction.CallbackContext context)
         {
-            //if (context.performed) OnNumberKeyPressed?.Invoke(12);
+            //if (context.performed) OnNumberKeyPressed?.Invoke(11);
         }
     }
 }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee525c16280f24b48972c0b3e23f2d20, type: 3}
+  m_Name: Chair
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Building.BuildData
+  _id:
+    _editorId: chair
+    _hash: 1555340682
+  DisplayName: chair
+  Recipe: []
+  Prefab: {fileID: 8314186838686432859, guid: 0260c6fabee924460ad57f74db67619a, type: 3}
+  Icon: {fileID: 8652625658316714873, guid: 2dee3d0289cde44d6af17b6bf2ab4cfa, type: 3}

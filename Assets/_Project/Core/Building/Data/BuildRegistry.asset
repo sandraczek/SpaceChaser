@@ -13,4 +13,20 @@ MonoBehaviour:
   m_Name: BuildRegistry
   m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Building.BuildRegistry
   _assets:
+  - {fileID: 11400000, guid: 750022bba018b487fb5bc31023fc9653, type: 2}
   - {fileID: 11400000, guid: 4351f7d9936c2448b9a7fb576ce0d6cf, type: 2}
+  - {fileID: 11400000, guid: c44396689321544b2adbb3a2bad6c35d, type: 2}
+  - {fileID: 11400000, guid: 45acd24a4d17444648eb7711a97097d3, type: 2}
+  - {fileID: 11400000, guid: e48f7fbce091e4a93b2cdb508530fce4, type: 2}
+  - {fileID: 11400000, guid: 0b7bb452904de47aaa85f467d8d08cfe, type: 2}
+  - {fileID: 11400000, guid: 985a94858164d4822a93d6d21cfc91d0, type: 2}
+  - {fileID: 11400000, guid: 6017d9f1574374b358f1278b8f0bdd8e, type: 2}
+  - {fileID: 11400000, guid: 1e1572fa2b4fc45de8b072db3da449a3, type: 2}
+  - {fileID: 11400000, guid: 46534f1fb070845b7aa71a07697813b0, type: 2}
+  - {fileID: 11400000, guid: 00b7afbbde3124ab0a76090527be3331, type: 2}
+  - {fileID: 11400000, guid: f9e416760943744a885db5b280a13731, type: 2}
+  - {fileID: 11400000, guid: b8cfc6e82fa5f44ebb4ae5f4feb7fc89, type: 2}
+  - {fileID: 11400000, guid: 94efe75e599364961b2f360e5ec0b369, type: 2}
+  - {fileID: 11400000, guid: 409fc539b2ef84401be5899a64caccba, type: 2}
+  - {fileID: 11400000, guid: 304203b5c6cb047929c59c6cb2c5e523, type: 2}
+  - {fileID: 11400000, guid: 28daf1aeff67842ef9ce683e22f6d0d9, type: 2}

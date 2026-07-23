@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee525c16280f24b48972c0b3e23f2d20, type: 3}
+  m_Name: Drawer
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceChaser.Core.Building.BuildData
+  _id:
+    _editorId: drawer
+    _hash: 785605648
+  DisplayName: drawer
+  Recipe: []
+  Prefab: {fileID: 8314186838686432859, guid: d8e828101d0c94ca2a1011dac6e6ab75, type: 3}
+  Icon: {fileID: -7866962194647477418, guid: 46ba79e5ca54f4dae89fc40313b74f81, type: 3}

@@ -293,7 +293,6 @@ namespace SpaceChaser.Core.Player
         }
         private void SelectAt(int index)
         {
-            index--;
             if (index < 0) UnselectBuild();
             else if (index < _config.BuildingSlots) SelectBuildAt(index);
             else if (index < _config.BuildingSlots + _config.StrutSlots) SelectStrutAt(index - _config.BuildingSlots);

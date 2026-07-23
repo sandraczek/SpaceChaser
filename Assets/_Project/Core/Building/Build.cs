@@ -58,5 +58,23 @@ namespace SpaceChaser.Core.Building
         {
             return (IReadOnlyList<Strut>)_joints.Keys.AsReadOnlyList();
         }
+
+#if UNITY_EDITOR
+        [ContextMenu("Match reference with Build Data")]
+        private void ForceAssignToSO()
+        {
+            if (UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() == null && !gameObject.scene.IsValid())
+            {
+                Data.Prefab = this;
+
+                UnityEditor.EditorUtility.SetDirty(Data);
+                Debug.Log($"<color=green>Successfuly referenced {gameObject.name} with {Data.name}</color>");
+            }
+            else
+            {
+                Debug.LogError("Failed maching reference");
+            }
+        }
+#endif
     }
 }
